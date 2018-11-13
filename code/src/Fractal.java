@@ -36,3 +36,27 @@ class Fractal {
 
     }
 }
+
+
+public void debugArgs(Mandelbrot m){
+    		System.out.pritnln("Mandelbrot");
+    		System.out.pritnln("Screen width" + m.screenWidth);
+    		System.out.pritnln("Real min" + m.realMin);
+    		System.out.pritnln("Real max" + m.realMax);
+    		System.out.pritnln("Complex min" + m.compMin);
+    		System.out.pritnln("Complex max" + m.compMax);
+    		System.out.pritnln("Iterations" + m.itter);
+
+    	}
+
+    	public void debugArgs(Julia j){
+    		System.out.pritnln("Julia");
+    		System.out.pritnln("Screen width" + j.screenWidth);
+    		System.out.pritnln("Real min" + j.realMin);
+    		System.out.pritnln("Real max" + j.realMax);
+    		System.out.pritnln("Complex min" + j.compMin);
+    		System.out.pritnln("Complex max" + j.compMax);
+    		System.out.pritnln("Iterations" + j.itter);
+
+    	}
+}
