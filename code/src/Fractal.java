@@ -1,9 +1,10 @@
 class Fractal {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         Mandelbrot m = new Mandelbrot();
-        Debugger.debugArgs(m);
+        m.printParameters();
+        m.calculate();
         m.draw();
     }
 }
