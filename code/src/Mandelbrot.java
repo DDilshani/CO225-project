@@ -4,11 +4,11 @@ import java.awt.geom.Line2D;
 
 public class Mandelbrot extends JPanel {
 
-    public float realMin = -1;
-    public float realMax = 1;
+    public float realMin = -1f;
+    public float realMax = 1f;
 
-    public float compMin = -1;
-    public float compMax = 1;
+    public float imagMin = -1f;
+    public float imagMax = 1f;
 
     public int itter = 1000;
 
@@ -23,27 +23,46 @@ public class Mandelbrot extends JPanel {
     Mandelbrot() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
     }
+    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax) {
 
-    Mandelbrot(float realMin, float realMax, float compMin, float compMax, int itter) {
-
-        // Load values given as arguments
+        // Load values which were given as arguments
         this.realMin = realMin;
         this.realMax = realMax;
 
-        this.compMin = compMin;
-        this.compMax = compMax;
+        this.imagMin = imagMin;
+        this.imagMax = imagMax;
+
+        setPreferredSize(new Dimension(screenWidth, screenHeight));
+    }
+    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int itter) {
+
+        // Load values which were given as arguments
+        this.realMin = realMin;
+        this.realMax = realMax;
+
+        this.imagMin = imagMin;
+        this.imagMax = imagMax;
 
         this.itter = itter;
         setPreferredSize(new Dimension(screenWidth, screenHeight));
+    }
+
+    private float mapX(int x) {
+        return 2 * (x - screenWidth / 2f) / (float) screenWidth;
+    }
+
+    private float mapY(int y) {
+        return 2 * (y - screenHeight / 2f) / (float) screenHeight;
     }
 
     public void calculate() {
 
         for (int x = 0; x < screenWidth; x++) {
             for (int y = 0; y < screenHeight; y++) {
+                // Map into the region of interest
 
-                float zX = 2 * (x - screenWidth / 2f) / (float) screenWidth;
-                float zY = 2 * (y - screenHeight / 2f) / (float) screenHeight;
+                float zX = mapX(x);
+                float zY = mapY(y);
 
                 Complex c = new Complex(zX, zY);
                 Complex z = new Complex(0, 0);
