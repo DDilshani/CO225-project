@@ -9,9 +9,9 @@ public class Mandelbrot {
     public float compMin = -1;
     public float compMax = 1;
 
-    public int itter = 1000;
-    public int screenHeight = 800;
-    public int screenWidth = 800;
+    public int itter = 10;
+    public int screenHeight = 600;
+    public int screenWidth = 600;
 
     private String title = "Mandelbrot";
 
@@ -47,9 +47,12 @@ public class Mandelbrot {
         // Draw the window
         frame = new JFrame(this.title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new Panel(this.screenWidth, this.screenHeight));
+        frame.setContentPane(new Panel(this.screenWidth, this.screenHeight,this));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
     }
+
+
 }

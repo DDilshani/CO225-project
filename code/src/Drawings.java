@@ -16,11 +16,11 @@ public class Drawings {
 
     public void start() {
 
-        frame = new JFrame(title);
+        /*frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new Panel(this.screenWidth, this.screenHeight));
+        frame.setContentPane(new Panel(this.screenWidth, this.screenHeight, this));
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        frame.setVisible(true);*/
     }
 }
