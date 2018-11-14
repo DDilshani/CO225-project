@@ -10,6 +10,7 @@ public class Julia extends FractalSuper {
 
     Julia() {
         super();
+        title = "Julia Set";
     }
 
     Julia(float real, float imag) {
@@ -17,6 +18,8 @@ public class Julia extends FractalSuper {
 
         this.real = real;
         this.imag = imag;
+
+        title = "Julia Set";
     }
 
     Julia(float real, float imag, int iter) {
@@ -25,6 +28,8 @@ public class Julia extends FractalSuper {
         this.real = real;
         this.imag = imag;
         this.iter = iter;
+
+        title = "Julia Set";
     }
 
     @Override

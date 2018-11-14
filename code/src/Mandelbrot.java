@@ -2,10 +2,9 @@ import java.awt.*;
 
 public class Mandelbrot extends FractalSuper {
 
-    private String title = "Mandelbrot";
-
     Mandelbrot() {
         super();
+        title = "Mandelbrot";
     }
 
     Mandelbrot(float realMin, float realMax, float imagMin, float imagMax) {
@@ -17,6 +16,8 @@ public class Mandelbrot extends FractalSuper {
 
         this.imagMin = imagMin;
         this.imagMax = imagMax;
+
+        title = "Mandelbrot";
 
     }
 
@@ -31,6 +32,8 @@ public class Mandelbrot extends FractalSuper {
         this.imagMax = imagMax;
 
         this.iter = iter;
+
+        title = "Mandelbrot";
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Mandelbrot extends FractalSuper {
                     }
                 }
                 //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> " + flag);
-                System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
+                //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
             }
         }
     }

@@ -16,7 +16,7 @@ public abstract class FractalSuper extends JPanel{
     static int screenHeight = 600;
     static int screenWidth = 800;
 
-    private String title = "Fractals";
+    protected String title = "Fractals";
     static JFrame frame;
 
     protected static int[][] grid = new int[screenWidth][screenHeight];
