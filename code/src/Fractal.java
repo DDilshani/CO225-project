@@ -2,9 +2,8 @@ class Fractal {
 
     public static void main(String[] args) {
 
-        int width, height, maxIter;
+        int maxIter;
         float realMax, realMin, imagMin, imagMax;
-
 
         if (args.length > 0 && args[0].equals("Mandelbrot")) {
             Mandelbrot m;
@@ -48,6 +47,9 @@ class Fractal {
 
             } else if (argc == 3) {
                 j = new Julia(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+
+            } else if (argc == 4) {
+                j = new Julia(Float.parseFloat(args[1]), Float.parseFloat(args[2]), Integer.parseInt(args[3]));
 
             } else {
                 System.out.println("Wrong input - Julia set");

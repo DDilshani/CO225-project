@@ -1,30 +1,15 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
 
-public class Mandelbrot extends JPanel {
-
-    public float realMin = -1f;
-    public float realMax = 1f;
-
-    public float imagMin = -1f;
-    public float imagMax = 1f;
-
-    public int itter = 1000;
-
-    public int screenHeight = 600;
-    public int screenWidth = 800;
+public class Mandelbrot extends FractalSuper {
 
     private String title = "Mandelbrot";
-    static JFrame frame;
-
-    private int[][] grid = new int[screenWidth][screenHeight];
 
     Mandelbrot() {
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+        super();
     }
 
     Mandelbrot(float realMin, float realMax, float imagMin, float imagMax) {
+        super();
 
         // Load values which were given as arguments
         this.realMin = realMin;
@@ -33,10 +18,10 @@ public class Mandelbrot extends JPanel {
         this.imagMin = imagMin;
         this.imagMax = imagMax;
 
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
     }
 
-    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int itter) {
+    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int iter) {
+        super();
 
         // Load values which were given as arguments
         this.realMin = realMin;
@@ -45,26 +30,18 @@ public class Mandelbrot extends JPanel {
         this.imagMin = imagMin;
         this.imagMax = imagMax;
 
-        this.itter = itter;
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.iter = iter;
     }
 
-    private float mapX(int x) {
-        // TODO: Map region of interest
-        // return 2 * (x - screenWidth / 2f) / (float) screenWidth;
-        return realMin + x * (realMax - realMin) / (float) screenWidth;
-    }
-
-    private float mapY(int y) {
-        // TODO: Map region of interest
-        //return 2 * (y - screenHeight / 2f) / (float) screenHeight;
-        return imagMax - y * (imagMax - imagMin) / (float) screenHeight;
-    }
-
+    @Override
     public void calculate() {
+        calculate(0, screenWidth, 0, screenHeight);
+    }
 
-        for (int x = 0; x < screenWidth; x++) {
-            for (int y = 0; y < screenHeight; y++) {
+    public void calculate(int xFrom, int xTo, int yFrom, int yTo) {
+
+        for (int x = xFrom; x < xTo; x++) {
+            for (int y = yFrom; y < yTo; y++) {
                 // Map into the region of interest
 
                 float zX = mapX(x);
@@ -73,7 +50,7 @@ public class Mandelbrot extends JPanel {
                 Complex c = new Complex(zX, zY);
                 Complex z = new Complex(0, 0);
 
-                for (int k = 0; k < itter; k++) {
+                for (int k = 0; k < iter; k++) {
                     //z = z^2 + c
                     z = Complex.add(Complex.square(z), c);
 
@@ -83,36 +60,14 @@ public class Mandelbrot extends JPanel {
                     }
                 }
                 //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> " + flag);
-                //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
-
+                System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
             }
         }
     }
 
-    public void draw() {
-
-        // Draw the window
-        frame = new JFrame(this.title);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(this);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
-
-    private static void drawPoint(Graphics2D frame, Color c, Point p) {
-
-        frame.setColor(c);
-        frame.draw(new Line2D.Double(p.getX(), p.getY(), p.getX(), p.getY()));
-        //frame.drawOval((int) p.getX(), (int) p.getY(), 2, 2);
-
-    }
-
     @Override
     public void paintComponent(Graphics g) {
-        // call paintComponent from parent class
+
         super.paintComponent(g);
 
         for (int x = 0; x < screenWidth; x++) {
@@ -123,26 +78,12 @@ public class Mandelbrot extends JPanel {
 
                 if (n == 0) {
                     drawPoint((Graphics2D) g, Color.RED, p);
+
                 } else {
-                    //n = Math.min(127, (n * 255 *5) / itter);
-                    //printPoint((Graphics2D) g, new Color(n, n, n), p);
-
-                    Color clr =  new Color(Color.HSBtoRGB(Math.min(255, (int)(220 + n/64f)), 1, n/(n+8f)));
-                    drawPoint((Graphics2D) g, clr, p);
-
+                    drawPoint((Graphics2D) g, colorCalculator(n), p);
                 }
             }
         }
-    }
-
-    public void printParameters() {
-        // Print all the parameters into Stdout
-        System.out.println(">> Mandelbrot");
-        System.out.println("Screen  " + screenWidth + " x " + screenHeight);
-        System.out.println("Real    [" + realMin + "," + realMax + "]");
-        System.out.println("Complex [" + imagMin + "," + imagMax + "]");
-        System.out.println("Iter:   " + itter);
-
     }
 
 }
