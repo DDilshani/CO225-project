@@ -2,13 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
-public class Mandelbrot extends JPanel {
+
+public class Julia extends JPanel {
 
     public float realMin = -1f;
     public float realMax = 1f;
 
     public float imagMin = -1f;
     public float imagMax = 1f;
+
+    private float real = -0.5f;
+    private float imag = 0.156f;
 
     public int itter = 1000;
 
@@ -20,32 +24,22 @@ public class Mandelbrot extends JPanel {
 
     private int[][] grid = new int[screenWidth][screenHeight];
 
-    Mandelbrot() {
+    Julia() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
     }
 
-    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax) {
+    Julia(float real, float imag) {
 
         // Load values which were given as arguments
-        this.realMin = realMin;
+        /*this.realMin = realMin;
         this.realMax = realMax;
 
         this.imagMin = imagMin;
         this.imagMax = imagMax;
+        */
+        this.real = real;
+        this.imag = imag;
 
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
-    }
-
-    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int itter) {
-
-        // Load values which were given as arguments
-        this.realMin = realMin;
-        this.realMax = realMax;
-
-        this.imagMin = imagMin;
-        this.imagMax = imagMax;
-
-        this.itter = itter;
         setPreferredSize(new Dimension(screenWidth, screenHeight));
     }
 
@@ -70,8 +64,8 @@ public class Mandelbrot extends JPanel {
                 float zX = mapX(x);
                 float zY = mapY(y);
 
-                Complex c = new Complex(zX, zY);
-                Complex z = new Complex(0, 0);
+                Complex c = new Complex(this.real, this.imag);
+                Complex z = new Complex(zX, zY);
 
                 for (int k = 0; k < itter; k++) {
                     //z = z^2 + c
@@ -82,7 +76,7 @@ public class Mandelbrot extends JPanel {
                         break;
                     }
                 }
-                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> " + flag);
+                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> ");
                 //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
 
             }
@@ -134,12 +128,11 @@ public class Mandelbrot extends JPanel {
 
     public void printParameters() {
         // Print all the parameters into Stdout
-        System.out.println(">> Mandelbrot");
+        System.out.println(">> Julia Set");
         System.out.println("Screen  " + screenWidth + " x " + screenHeight);
         System.out.println("Real    [" + realMin + "," + realMax + "]");
         System.out.println("Complex [" + imagMin + "," + imagMax + "]");
         System.out.println("Iter:   " + itter);
 
     }
-
 }

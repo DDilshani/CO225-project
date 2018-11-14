@@ -25,7 +25,7 @@ public class Complex {
 
     public static Complex square(Complex a) {
         //return new Complex(Math.pow(a.real, 2) - Math.pow(a.imag, 2), 2 * a.real * a.imag);
-        return new Complex(a.real*a.real-a.img*a.img , 2*a.real*a.img);
+        return new Complex(a.real*a.real-a.imag*a.imag , 2*a.real*a.imag);
     }
 
     public double abs() {
