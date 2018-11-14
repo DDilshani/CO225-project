@@ -1,57 +1,49 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
 
-public class Mandelbrot extends FractalSuper {
+public class Julia extends FractalSuper {
 
-    Mandelbrot() {
+    private float real, imag;
+
+    private String title = "Julia";
+
+    Julia() {
         super();
-        title = "Mandelbrot";
+        title = "Julia Set";
     }
 
-    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax) {
+    Julia(float real, float imag) {
         super();
 
-        // Load values which were given as arguments
-        this.realMin = realMin;
-        this.realMax = realMax;
+        this.real = real;
+        this.imag = imag;
 
-        this.imagMin = imagMin;
-        this.imagMax = imagMax;
-
-        title = "Mandelbrot";
-
+        title = "Julia Set";
     }
 
-    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int iter) {
+    Julia(float real, float imag, int iter) {
         super();
 
-        // Load values which were given as arguments
-        this.realMin = realMin;
-        this.realMax = realMax;
-
-        this.imagMin = imagMin;
-        this.imagMax = imagMax;
-
+        this.real = real;
+        this.imag = imag;
         this.iter = iter;
 
-        title = "Mandelbrot";
+        title = "Julia Set";
     }
 
     @Override
     public void calculate() {
-        calculate(0, screenWidth, 0, screenHeight);
-    }
 
-    public void calculate(int xFrom, int xTo, int yFrom, int yTo) {
-
-        for (int x = xFrom; x < xTo; x++) {
-            for (int y = yFrom; y < yTo; y++) {
+        for (int x = 0; x < screenWidth; x++) {
+            for (int y = 0; y < screenHeight; y++) {
                 // Map into the region of interest
 
                 float zX = mapX(x);
                 float zY = mapY(y);
 
-                Complex c = new Complex(zX, zY);
-                Complex z = new Complex(0, 0);
+                Complex c = new Complex(this.real, this.imag);
+                Complex z = new Complex(zX, zY);
 
                 for (int k = 0; k < iter; k++) {
                     //z = z^2 + c
@@ -62,15 +54,16 @@ public class Mandelbrot extends FractalSuper {
                         break;
                     }
                 }
-                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> " + flag);
+                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> ");
                 //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
+
             }
         }
     }
 
     @Override
     public void paintComponent(Graphics g) {
-
+        // call paintComponent from parent class
         super.paintComponent(g);
 
         for (int x = 0; x < screenWidth; x++) {
@@ -81,7 +74,6 @@ public class Mandelbrot extends FractalSuper {
 
                 if (n == 0) {
                     drawPoint((Graphics2D) g, Color.RED, p);
-
                 } else {
                     drawPoint((Graphics2D) g, colorCalculator(n), p);
                 }
