@@ -2,22 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
-
 public class Julia extends JPanel {
 
-    public float realMin = -1f;
-    public float realMax = 1f;
+    private float realMin = -1f;
+    private float realMax = 1f;
 
-    public float imagMin = -1f;
-    public float imagMax = 1f;
+    private float imagMin = -1f;
+    private float imagMax = 1f;
 
     private float real = -0.5f;
     private float imag = 0.156f;
 
-    public int itter = 1000;
+    private int itter = 1000;
 
-    public int screenHeight = 600;
-    public int screenWidth = 800;
+    private int screenHeight = 600;
+    private int screenWidth = 800;
 
     private String title = "Mandelbrot";
     static JFrame frame;
@@ -120,7 +119,8 @@ public class Julia extends JPanel {
                 } else {
                     //n = Math.min(127, (n * 255 *5) / itter);
                     //printPoint((Graphics2D) g, new Color(n, n, n), p);
-                    drawPoint((Graphics2D) g, Color.BLACK, p);
+                    Color clr =  new Color(Color.HSBtoRGB(n/256f, 1, n/(n+8f)));
+                    drawPoint((Graphics2D) g, clr, p);
                 }
             }
         }

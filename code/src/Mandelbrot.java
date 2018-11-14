@@ -126,7 +126,10 @@ public class Mandelbrot extends JPanel {
                 } else {
                     //n = Math.min(127, (n * 255 *5) / itter);
                     //printPoint((Graphics2D) g, new Color(n, n, n), p);
-                    drawPoint((Graphics2D) g, Color.BLACK, p);
+
+                    Color clr =  new Color(Color.HSBtoRGB(Math.min(255, (int)(220 + n/64f)), 1, n/(n+8f)));
+                    drawPoint((Graphics2D) g, clr, p);
+
                 }
             }
         }
