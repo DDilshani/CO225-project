@@ -7,18 +7,20 @@ class Fractal {
         long startTime = System.nanoTime();
         int argc = args.length;
         int maxIter = 1000;
+        int screenHeight = 800, screenWidth = 800;
 
+        // Threads
         int noOfThreads = 2;
-
         Thread[] tr = new Thread[noOfThreads];
 
-        if (args.length > 0 && args[0].equals("Mandelbrot")) {
+        if (argc > 0 && args[0].equals("Mandelbrot")) {
 
             Mandelbrot[] m = new Mandelbrot[noOfThreads];
             float realMax = 1f, realMin = -1f, imagMin = -1f, imagMax = 1f;
 
+            // Read and update arguments given from the commandline
             if (argc == 1 || argc == 5 || argc == 6) {
-                if (argc >= 5) {        // 4 arguments >> region of interst in the complex plane
+                if (argc >= 5) {
                     realMin = Float.parseFloat(args[1]);
                     realMax = Float.parseFloat(args[2]);
                     imagMin = Float.parseFloat(args[3]);
@@ -32,15 +34,16 @@ class Fractal {
             }
 
             for (int i = 0; i < noOfThreads; i++) {
-
+                // Starting a Thread
                 m[i] = new Mandelbrot(realMin, realMax, imagMin, imagMax, maxIter, "Thread" + i);
-                m[i].applicableArea(new Rectangle((800 / noOfThreads) * i, 0, (800 / noOfThreads), 600));
+                m[i].applicableArea(new Rectangle((screenWidth / noOfThreads) * i, 0, (screenWidth / noOfThreads), screenHeight));
 
                 tr[i] = new Thread(m[i], "Thread" + i);
                 tr[i].start();
             }
 
             try {
+                // Wait until all the threads complete execution
                 for (int i = 0; i < noOfThreads; i++) {
                     tr[i].join();
                 }
@@ -49,22 +52,25 @@ class Fractal {
                 System.out.println("Not good");
             }
 
-            // Draw the matrix on display
+            // Draw the calculated values on the display
             m[0].printParameters();
-            Plotter p = new Plotter(m[0].getGrid(), "Mandelbrot");
+            MyPanel p = new MyPanel(m[0].getGrid(), screenHeight, screenWidth, "Mandelbrot");
             p.draw();
 
-        } else if (args.length > 0 && args[0].equals("Julia")) {
+
+        } else if (argc > 0 && args[0].equals("Julia")) {
 
             Julia[] j = new Julia[noOfThreads];
             float real = 1f, imag = -1f;
 
+            // Read and update arguments given from the commandline
             if (argc == 1 || argc == 3 || argc == 4) {
                 if (argc >= 3) {
                     real = Float.parseFloat(args[1]);
                     imag = Float.parseFloat(args[2]);
                 }
                 if (argc == 4) maxIter = Integer.parseInt(args[3]);
+
             } else {
                 System.out.println("Wrong input - Julia set");
                 return;
@@ -72,7 +78,7 @@ class Fractal {
 
             for (int i = 0; i < noOfThreads; i++) {
                 j[i] = new Julia(real, imag, maxIter, "Thread" + i);
-                j[i].applicableArea(new Rectangle((800 / noOfThreads) * i, 0, (800 / noOfThreads), 600));
+                j[i].applicableArea(new Rectangle((screenWidth / noOfThreads) * i, 0, (screenWidth / noOfThreads), screenHeight));
 
                 tr[i] = new Thread(j[i], "Thread" + i);
                 tr[i].start();
@@ -86,20 +92,19 @@ class Fractal {
                 System.out.println("Not good");
             }
 
-            // Draw the matrix on display
+            // Draw the calculated values on the display
             j[0].printParameters();
-            Plotter p = new Plotter(j[0].getGrid(), "Julia Set");
+            MyPanel p = new MyPanel(j[0].getGrid(), screenHeight, screenWidth, "Julia Sets");
             p.draw();
 
-        } else
-
-        {
-            System.out.println("wrong input");
+        } else {
+            System.out.println("Wrong input");
             return;
         }
 
+        // Print the time spend for execution in milliseconds
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
-        System.out.println("Execution Time: " + duration + "ms");
+        System.out.println("\nExecution Time: " + duration + "ms");
     }
 }

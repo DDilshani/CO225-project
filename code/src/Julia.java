@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Julia extends FractalSuper {
-
-
     private float real, imag;
 
     private String title = "Julia";
@@ -40,6 +38,7 @@ public class Julia extends FractalSuper {
         for (int x = xFrom; x < xTo; x++) {
             for (int y = yFrom; y < yTo; y++) {
                 // Map into the region of interest
+
                 float zX = mapX(x);
                 float zY = mapY(y);
 
@@ -54,7 +53,6 @@ public class Julia extends FractalSuper {
                         break;
                     }
                 }
-                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> ");
                 //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
             }
         }

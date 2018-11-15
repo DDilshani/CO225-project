@@ -4,8 +4,6 @@ import java.awt.*;
 
 public class Mandelbrot extends FractalSuper {
 
-    private static PointGrid grid = new PointGrid(800, 600);
-
     Mandelbrot() {
         title = "Mandelbrot";
     }
@@ -19,7 +17,6 @@ public class Mandelbrot extends FractalSuper {
 
         this.imagMin = imagMin;
         this.imagMax = imagMax;
-
     }
 
     Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int iter, String tName) {
@@ -59,11 +56,8 @@ public class Mandelbrot extends FractalSuper {
                         break;
                     }
                 }
-                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> " + flag);
                 //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
             }
         }
     }
-
-
 }

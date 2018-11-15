@@ -5,7 +5,6 @@ public class Complex {
     private final double real;   // the real part
     private final double imag;   // the imag part
 
-    // create a new object with the given real and imag parts
     public Complex(double real, double imag) {
         this.real = real;
         this.imag = imag;
