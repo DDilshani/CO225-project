@@ -11,28 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Fractal.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Fractal.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1819">
-              <caret line="107" column="30" lean-forward="false" selection-start-line="107" selection-start-column="30" selection-end-line="107" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MyPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MyPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -76,13 +55,13 @@
         <option value="$PROJECT_DIR$/src/Threads/FractalThread.java" />
         <option value="$PROJECT_DIR$/src/FractalThread.java" />
         <option value="$PROJECT_DIR$/filename.txt" />
-        <option value="$PROJECT_DIR$/src/Complex.java" />
-        <option value="$PROJECT_DIR$/src/Julia.java" />
-        <option value="$PROJECT_DIR$/src/Mandelbrot.java" />
         <option value="$PROJECT_DIR$/src/Plotter.java" />
         <option value="$PROJECT_DIR$/src/PointGrid.java" />
         <option value="$PROJECT_DIR$/src/MyPanel.java" />
         <option value="$PROJECT_DIR$/src/FractalSuper.java" />
+        <option value="$PROJECT_DIR$/src/Mandelbrot.java" />
+        <option value="$PROJECT_DIR$/src/Julia.java" />
+        <option value="$PROJECT_DIR$/src/Complex.java" />
         <option value="$PROJECT_DIR$/src/Fractal.java" />
       </list>
     </option>
@@ -296,7 +275,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -311,7 +289,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -368,7 +346,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="969">
           <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -401,9 +381,9 @@
         <state relative-caret-position="34">
           <caret line="2" column="43" lean-forward="true" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
             <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#calculate#0;class#Mandelbrot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -433,7 +413,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -442,9 +424,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
             <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#calculate#0;class#Mandelbrot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -453,7 +435,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -470,9 +454,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
             <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#calculate#0;class#Mandelbrot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -481,7 +465,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -498,9 +484,9 @@
         <state relative-caret-position="221">
           <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
             <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#calculate#0;class#Mandelbrot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -509,7 +495,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -527,9 +515,9 @@
         <state relative-caret-position="833">
           <caret line="49" column="38" lean-forward="false" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="38" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
             <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#calculate#0;class#Mandelbrot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -539,7 +527,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="28" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -574,26 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Complex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mandelbrot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="57" column="17" lean-forward="false" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
-            <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Plotter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -610,11 +580,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Julia.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#Julia#1;class#Julia#0" expanded="false" />
+            <element signature="method#Julia#2;class#Julia#0" expanded="false" />
+            <element signature="method#calculate#0;class#Julia#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mandelbrot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#Mandelbrot#1;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#Mandelbrot#2;class#Mandelbrot#0" expanded="false" />
+            <element signature="method#calculate#0;class#Mandelbrot#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FractalSuper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="22" column="20" lean-forward="false" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
+            <element signature="e#638#639#0" expanded="true" />
             <element signature="e#701#702#0" expanded="true" />
             <element signature="method#mapX#0;class#FractalSuper#0" expanded="false" />
             <element signature="method#mapY#0;class#FractalSuper#0" expanded="false" />
@@ -627,40 +622,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Julia.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="54" column="17" lean-forward="false" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Julia#0;class#Julia#0" expanded="false" />
-            <element signature="method#Julia#1;class#Julia#0" expanded="false" />
-            <element signature="method#Julia#2;class#Julia#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/PointGrid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MyPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
+        <state relative-caret-position="440">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Complex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding>
+            <element signature="method#multiply#0;class#Complex#0" expanded="false" />
+            <element signature="method#square#0;class#Complex#0" expanded="false" />
+            <element signature="method#abs#0;class#Complex#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Fractal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1819">
-          <caret line="107" column="30" lean-forward="false" selection-start-line="107" selection-start-column="30" selection-end-line="107" selection-end-column="30" />
-          <folding />
+        <state relative-caret-position="1445">
+          <caret line="85" column="110" lean-forward="false" selection-start-line="85" selection-start-column="110" selection-end-line="85" selection-end-column="110" />
+          <folding>
+            <element signature="e#0#4698#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

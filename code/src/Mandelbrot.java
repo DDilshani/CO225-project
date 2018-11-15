@@ -1,13 +1,9 @@
-import com.sun.deploy.util.SyncAccess;
-
-import java.awt.*;
 
 public class Mandelbrot extends FractalSuper {
+    private String title = "Mandelbrot";
 
     Mandelbrot() {
-        title = "Mandelbrot";
     }
-
     Mandelbrot(float realMin, float realMax, float imagMin, float imagMax) {
         this();
 
