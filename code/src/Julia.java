@@ -1,17 +1,11 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Line2D;
 
 public class Julia extends FractalSuper {
     private float real, imag;
-
-    private String title = "Julia";
+    private String title = "Julia Set";
 
     Julia() {
         this.real = -0.4f;
         this.imag = 0.6f;
-
-        title = "Julia Set";
     }
 
     Julia(float real, float imag) {

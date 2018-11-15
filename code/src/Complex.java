@@ -1,9 +1,8 @@
-import java.util.Objects;
 
 public class Complex {
 
-    private final double real;   // the real part
-    private final double imag;   // the imag part
+    private final double real;
+    private final double imag;
 
     public Complex(double real, double imag) {
         this.real = real;

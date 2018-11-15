@@ -1,3 +1,28 @@
+/* --------------------------------------------------------------------------------------
+
+   CO225 Software Construction Project - Fractals: Natures building blocks
+
+   Authors:
+       Jaliyagoda. A.J.N.M.    (E/15/140)
+       Karunarathne S.D.D.D.   (E/15/173)
+
+   Classes:
+       Fractal (main)
+       Mandelbrot  <-- FractalSuper    <-- Thread
+       Julia       <-- FractalSuper    <-- Thread
+       MyPanel     <-- JPanel
+       PointGrid
+       Complex
+
+   Last Update:
+       15/11/2018
+
+   Source Code:
+       https://github.com/DDilshani/CO225-project
+
+-------------------------------------------------------------------------------------- */
+
+
 import java.awt.*;
 
 class Fractal {
@@ -9,10 +34,11 @@ class Fractal {
         int maxIter = 1000;
         int screenHeight = 800, screenWidth = 800;
 
-        // Threads
+        // Using Threads
         int noOfThreads = 2;
         Thread[] tr = new Thread[noOfThreads];
 
+        // ----- Mandelbrot --------------------------------------------------------------------------------------
         if (argc > 0 && args[0].equals("Mandelbrot")) {
 
             Mandelbrot[] m = new Mandelbrot[noOfThreads];
@@ -57,7 +83,7 @@ class Fractal {
             MyPanel p = new MyPanel(m[0].getGrid(), screenHeight, screenWidth, "Mandelbrot");
             p.draw();
 
-
+            // ----- Julia Set -------------------------------------------------------------------------------
         } else if (argc > 0 && args[0].equals("Julia")) {
 
             Julia[] j = new Julia[noOfThreads];
