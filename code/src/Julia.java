@@ -3,40 +3,40 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Julia extends FractalSuper {
-
     private float real, imag;
 
     private String title = "Julia";
 
     Julia() {
-        super();
+        this.real = -0.4f;
+        this.imag = 0.6f;
+
         title = "Julia Set";
     }
 
     Julia(float real, float imag) {
-        super();
+        this();
 
         this.real = real;
         this.imag = imag;
 
-        title = "Julia Set";
     }
 
-    Julia(float real, float imag, int iter) {
-        super();
+    Julia(float real, float imag, int iter, String tName) {
+        this();
 
         this.real = real;
         this.imag = imag;
         this.iter = iter;
 
-        title = "Julia Set";
+        this.threadName = tName;
     }
 
     @Override
-    public void calculate() {
+    public void calculate(int xFrom, int xTo, int yFrom, int yTo) {
 
-        for (int x = 0; x < screenWidth; x++) {
-            for (int y = 0; y < screenHeight; y++) {
+        for (int x = xFrom; x < xTo; x++) {
+            for (int y = yFrom; y < yTo; y++) {
                 // Map into the region of interest
 
                 float zX = mapX(x);
@@ -46,37 +46,14 @@ public class Julia extends FractalSuper {
                 Complex z = new Complex(zX, zY);
 
                 for (int k = 0; k < iter; k++) {
-                    //z = z^2 + c
                     z = Complex.add(Complex.square(z), c);
 
                     if (z.absSquare() > 4) {
-                        grid[x][y] = k;
+                        PointGrid.setPoint(x, y, k);
                         break;
                     }
                 }
-                //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> ");
                 //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
-
-            }
-        }
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        // call paintComponent from parent class
-        super.paintComponent(g);
-
-        for (int x = 0; x < screenWidth; x++) {
-            for (int y = 0; y < screenHeight; y++) {
-                Point p = new Point(x, y);
-
-                int n = grid[x][y];
-
-                if (n == 0) {
-                    drawPoint((Graphics2D) g, Color.RED, p);
-                } else {
-                    drawPoint((Graphics2D) g, colorCalculator(n), p);
-                }
             }
         }
     }

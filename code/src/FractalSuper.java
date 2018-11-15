@@ -1,90 +1,60 @@
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
 
-public abstract class FractalSuper extends JPanel{
+public abstract class FractalSuper extends Thread {
 
-    public float realMin = -1f;
-    public float realMax = 1f;
+    // ---- Attributes -----------------------------------------------------------------------
 
-    public float imagMin = -1f;
-    public float imagMax = 1f;
+    protected int xF, xT, yF, yT;
 
-    public int iter = 1000;
+    protected Thread t;
+    protected String threadName;
 
-    static int screenHeight = 600;
-    static int screenWidth = 800;
+    protected float realMin = -1f, realMax = 1f;
+    protected float imagMin = -1f, imagMax = 1f;
+    protected int iter = 1000;
+
+    private static int screenWidth = 800, screenHeight = 800;
+    static PointGrid grid;
 
     protected String title = "Fractals";
-    static JFrame frame;
 
-    protected static int[][] grid = new int[screenWidth][screenHeight];
+    // ---- Methods -------------------------------------------------------------------------
 
-    FractalSuper(){
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+    FractalSuper() {
+        grid = new PointGrid(screenWidth, screenHeight);
     }
 
     protected float mapX(int x) {
-        // return 2 * (x - screenWidth / 2f) / (float) screenWidth;
+        // Map the x coordinate to the complex plane
         return realMin + x * (realMax - realMin) / (float) screenWidth;
     }
 
     protected float mapY(int y) {
-        //return 2 * (y - screenHeight / 2f) / (float) screenHeight;
+        // Map the y coordinate to the complex plane
         return imagMax - y * (imagMax - imagMin) / (float) screenHeight;
     }
 
     public void calculate() {
-
+        calculate(0, screenWidth, 0, screenHeight);
     }
 
-    public void draw() {
-
-        // Draw the window
-        frame = new JFrame(this.title);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(this);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-
-        frame.setResizable(false);
-        frame.setVisible(true);
+    public void calculate(int xFrom, int xTo, int yFrom, int yTo) {
+        // Will be overloaded by child class
     }
 
-    protected static void drawPoint(Graphics2D frame, Color c, Point p) {
-
-        frame.setColor(c);
-        frame.draw(new Line2D.Double(p.getX(), p.getY(), p.getX(), p.getY()));
-        //frame.drawOval((int) p.getX(), (int) p.getY(), 2, 2);
+    public PointGrid getGrid() {
+        return grid;
     }
 
-    protected Color colorCalculator(int k){
-        return new Color(Color.HSBtoRGB(Math.min(255, (int) (220 + k / 64f)), 1, k / (k + 8f)));
-    }
+    public void applicableArea(Rectangle a) {
+        // This is the region calculated by the current thread
+        xF = (int) a.getMinX();
+        xT = (int) a.getMaxX();
 
-    public void paintComponent(Graphics g) {
-        // call paintComponent from parent class
-        super.paintComponent(g);
+        yF = (int) a.getMinY();
+        yT = (int) a.getMaxY();
 
-        /*for (int x = 0; x < screenWidth; x++) {
-            for (int y = 0; y < screenHeight; y++) {
-                Point p = new Point(x, y);
-
-                int n = grid[x][y];
-
-                if (n == 0) {
-                    drawPoint((Graphics2D) g, Color.RED, p);
-                } else {
-                    //n = Math.min(127, (n * 255 *5) / itter);
-                    //printPoint((Graphics2D) g, new Color(n, n, n), p);
-
-                    Color clr = new Color(Color.HSBtoRGB(Math.min(255, (int) (220 + n / 64f)), 1, n / (n + 8f)));
-                    drawPoint((Graphics2D) g, clr, p);
-
-                }
-            }
-        }*/
+        //System.out.println(xF + " " + xT + " " + yF + " " + yT);
     }
 
     public void printParameters() {
@@ -96,4 +66,22 @@ public abstract class FractalSuper extends JPanel{
         System.out.println("Iter:   " + iter);
 
     }
+
+
+    // ---- Thread Related Methods --------------------------------------------------------
+
+    @Override
+    public void run() {
+        System.out.println(threadName + " running...");
+        calculate(xF, xT, yF, yT);
+    }
+
+    @Override
+    public void start() {
+        if (t == null) {
+            t = new Thread(this, threadName);
+            t.start();
+        }
+    }
+
 }

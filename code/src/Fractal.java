@@ -1,67 +1,110 @@
+import java.awt.*;
+
 class Fractal {
 
     public static void main(String[] args) {
 
-        int maxIter;
-        float realMax, realMin, imagMin, imagMax;
+        long startTime = System.nanoTime();
+        int argc = args.length;
+        int maxIter = 1000;
+        int screenHeight = 800, screenWidth = 800;
 
-        if (args.length > 0 && args[0].equals("Mandelbrot")) {
-            Mandelbrot m;
-            int argc = args.length;
+        // Threads
+        int noOfThreads = 2;
+        Thread[] tr = new Thread[noOfThreads];
 
-            if (argc == 1) {                // 0 arguments >> calling default values
-                m = new Mandelbrot();
+        if (argc > 0 && args[0].equals("Mandelbrot")) {
 
-            } else if (argc == 5) {        // 4 arguments >> region of interst in the complex plane
-                realMin = Float.parseFloat(args[1]);
-                realMax = Float.parseFloat(args[2]);
-                imagMin = Float.parseFloat(args[3]);
-                imagMax = Float.parseFloat(args[4]);
-                m = new Mandelbrot(realMin, realMax, imagMin, imagMax);
+            Mandelbrot[] m = new Mandelbrot[noOfThreads];
+            float realMax = 1f, realMin = -1f, imagMin = -1f, imagMax = 1f;
 
-            } else if (argc == 6) {        // 5 arguemnts >> number of iterations to do for a point
-                realMin = Float.parseFloat(args[1]);
-                realMax = Float.parseFloat(args[2]);
-                imagMin = Float.parseFloat(args[3]);
-                imagMax = Float.parseFloat(args[4]);
-                maxIter = Integer.parseInt(args[5]);
-                m = new Mandelbrot(realMin, realMax, imagMin, imagMax, maxIter);
+            // Read and update arguments given from the commandline
+            if (argc == 1 || argc == 5 || argc == 6) {
+                if (argc >= 5) {
+                    realMin = Float.parseFloat(args[1]);
+                    realMax = Float.parseFloat(args[2]);
+                    imagMin = Float.parseFloat(args[3]);
+                    imagMax = Float.parseFloat(args[4]);
+                }
+                if (argc == 6) maxIter = Integer.parseInt(args[5]);
 
             } else {
                 System.out.println("Wrong input - Mandelbrot");
                 return;
             }
 
-            // Print Parameters and Draw
-            m.printParameters();
-            m.calculate();
-            m.draw();
+            for (int i = 0; i < noOfThreads; i++) {
+                // Starting a Thread
+                m[i] = new Mandelbrot(realMin, realMax, imagMin, imagMax, maxIter, "Thread" + i);
+                m[i].applicableArea(new Rectangle((screenWidth / noOfThreads) * i, 0, (screenWidth / noOfThreads), screenHeight));
 
-        } else if (args.length > 0 && args[0].equals("Julia")) {
+                tr[i] = new Thread(m[i], "Thread" + i);
+                tr[i].start();
+            }
 
-            Julia j = new Julia();
-            int argc = args.length;
+            try {
+                // Wait until all the threads complete execution
+                for (int i = 0; i < noOfThreads; i++) {
+                    tr[i].join();
+                }
 
-            if (argc == 1) {
-                j = new Julia();
+            } catch (InterruptedException e) {
+                System.out.println("Not good");
+            }
 
-            } else if (argc == 3) {
-                j = new Julia(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+            // Draw the calculated values on the display
+            m[0].printParameters();
+            MyPanel p = new MyPanel(m[0].getGrid(), screenHeight, screenWidth, "Mandelbrot");
+            p.draw();
 
-            } else if (argc == 4) {
-                j = new Julia(Float.parseFloat(args[1]), Float.parseFloat(args[2]), Integer.parseInt(args[3]));
+
+        } else if (argc > 0 && args[0].equals("Julia")) {
+
+            Julia[] j = new Julia[noOfThreads];
+            float real = 1f, imag = -1f;
+
+            // Read and update arguments given from the commandline
+            if (argc == 1 || argc == 3 || argc == 4) {
+                if (argc >= 3) {
+                    real = Float.parseFloat(args[1]);
+                    imag = Float.parseFloat(args[2]);
+                }
+                if (argc == 4) maxIter = Integer.parseInt(args[3]);
 
             } else {
                 System.out.println("Wrong input - Julia set");
                 return;
             }
 
-            j.printParameters();
-            j.calculate();
-            j.draw();
+            for (int i = 0; i < noOfThreads; i++) {
+                j[i] = new Julia(real, imag, maxIter, "Thread" + i);
+                j[i].applicableArea(new Rectangle((screenWidth / noOfThreads) * i, 0, (screenWidth / noOfThreads), screenHeight));
+
+                tr[i] = new Thread(j[i], "Thread" + i);
+                tr[i].start();
+            }
+
+            try {
+                for (int i = 0; i < noOfThreads; i++) {
+                    tr[i].join();
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Not good");
+            }
+
+            // Draw the calculated values on the display
+            j[0].printParameters();
+            MyPanel p = new MyPanel(j[0].getGrid(), screenHeight, screenWidth, "Julia Sets");
+            p.draw();
 
         } else {
-            System.out.println("wrong input");
+            System.out.println("Wrong input");
+            return;
         }
+
+        // Print the time spend for execution in milliseconds
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        System.out.println("\nExecution Time: " + duration + "ms");
     }
 }
