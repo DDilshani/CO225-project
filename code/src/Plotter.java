@@ -7,9 +7,7 @@ public class Plotter extends JPanel {
     static int screenHeight = 600;
     static int screenWidth = 800;
 
-    //protected static int[][] grid = new int[screenWidth][screenHeight];
     private PointGrid grid;
-
 
     protected String title = "Fractals";
     static JFrame frame;
@@ -17,6 +15,11 @@ public class Plotter extends JPanel {
     Plotter(PointGrid grid) {
         this.grid = grid;
         setPreferredSize(new Dimension(screenWidth, screenHeight));
+    }
+
+    Plotter(PointGrid grid, String title) {
+        this(grid);
+        this.title = title;
     }
 
     protected static void drawPoint(Graphics2D frame, Color c, Point p) {
@@ -37,7 +40,7 @@ public class Plotter extends JPanel {
             for (int y = 0; y < screenHeight; y++) {
                 Point p = new Point(x, y);
 
-                int n = PointGrid.getPoint(x,y);
+                int n = PointGrid.getPoint(x, y);
 
                 if (n == 0) {
                     drawPoint((Graphics2D) g, Color.BLACK, p);

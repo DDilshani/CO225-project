@@ -5,31 +5,26 @@ class Fractal {
     public static void main(String[] args) {
 
         long startTime = System.nanoTime();
-        int noOfThreads =1;
+        int argc = args.length;
         int maxIter = 1000;
-        float realMax = 1f, realMin = -1f, imagMin = -1f, imagMax = 1f;
 
-        Mandelbrot[] m = new Mandelbrot[noOfThreads];
+        int noOfThreads = 2;
+
         Thread[] tr = new Thread[noOfThreads];
 
         if (args.length > 0 && args[0].equals("Mandelbrot")) {
-            int argc = args.length;
 
-            if (argc == 1) {                // 0 arguments >> calling default values
-                // All default arguments
+            Mandelbrot[] m = new Mandelbrot[noOfThreads];
+            float realMax = 1f, realMin = -1f, imagMin = -1f, imagMax = 1f;
 
-            } else if (argc == 5) {        // 4 arguments >> region of interst in the complex plane
-                realMin = Float.parseFloat(args[1]);
-                realMax = Float.parseFloat(args[2]);
-                imagMin = Float.parseFloat(args[3]);
-                imagMax = Float.parseFloat(args[4]);
-
-            } else if (argc == 6) {        // 5 arguemnts >> number of iterations to do for a point
-                realMin = Float.parseFloat(args[1]);
-                realMax = Float.parseFloat(args[2]);
-                imagMin = Float.parseFloat(args[3]);
-                imagMax = Float.parseFloat(args[4]);
-                maxIter = Integer.parseInt(args[5]);
+            if (argc == 1 || argc == 5 || argc == 6) {
+                if (argc >= 5) {        // 4 arguments >> region of interst in the complex plane
+                    realMin = Float.parseFloat(args[1]);
+                    realMax = Float.parseFloat(args[2]);
+                    imagMin = Float.parseFloat(args[3]);
+                    imagMax = Float.parseFloat(args[4]);
+                }
+                if (argc == 6) maxIter = Integer.parseInt(args[5]);
 
             } else {
                 System.out.println("Wrong input - Mandelbrot");
@@ -46,7 +41,6 @@ class Fractal {
             }
 
             try {
-
                 for (int i = 0; i < noOfThreads; i++) {
                     tr[i].join();
                 }
@@ -56,36 +50,52 @@ class Fractal {
             }
 
             // Draw the matrix on display
-            Plotter p = new Plotter(m[0].getGrid());
+            m[0].printParameters();
+            Plotter p = new Plotter(m[0].getGrid(), "Mandelbrot");
             p.draw();
 
+        } else if (args.length > 0 && args[0].equals("Julia")) {
 
-        } else if (args.length > 0 && args[0].
-                equals("Julia")) {
+            Julia[] j = new Julia[noOfThreads];
+            float real = 1f, imag = -1f;
 
-            Julia j = new Julia();
-            int argc = args.length;
-
-            if (argc == 1) {
-                j = new Julia();
-
-            } else if (argc == 3) {
-                j = new Julia(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
-
-            } else if (argc == 4) {
-                j = new Julia(Float.parseFloat(args[1]), Float.parseFloat(args[2]), Integer.parseInt(args[3]));
-
+            if (argc == 1 || argc == 3 || argc == 4) {
+                if (argc >= 3) {
+                    real = Float.parseFloat(args[1]);
+                    imag = Float.parseFloat(args[2]);
+                }
+                if (argc == 4) maxIter = Integer.parseInt(args[3]);
             } else {
                 System.out.println("Wrong input - Julia set");
                 return;
             }
 
-            j.printParameters();
-            j.calculate();
-            //j.draw();
+            for (int i = 0; i < noOfThreads; i++) {
+                j[i] = new Julia(real, imag, maxIter, "Thread" + i);
+                j[i].applicableArea(new Rectangle((800 / noOfThreads) * i, 0, (800 / noOfThreads), 600));
 
-        } else {
+                tr[i] = new Thread(j[i], "Thread" + i);
+                tr[i].start();
+            }
+
+            try {
+                for (int i = 0; i < noOfThreads; i++) {
+                    tr[i].join();
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Not good");
+            }
+
+            // Draw the matrix on display
+            j[0].printParameters();
+            Plotter p = new Plotter(j[0].getGrid(), "Julia Set");
+            p.draw();
+
+        } else
+
+        {
             System.out.println("wrong input");
+            return;
         }
 
         long endTime = System.nanoTime();
