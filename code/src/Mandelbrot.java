@@ -1,9 +1,14 @@
+import com.sun.deploy.util.SyncAccess;
+
 import java.awt.*;
 
 public class Mandelbrot extends FractalSuper {
 
+    static PointGrid grid = new PointGrid(800, 600);
+    private int xF, xT, yF, yT;
+
     Mandelbrot() {
-        super();
+        //super();
         title = "Mandelbrot";
     }
 
@@ -21,7 +26,7 @@ public class Mandelbrot extends FractalSuper {
 
     }
 
-    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int iter) {
+    Mandelbrot(float realMin, float realMax, float imagMin, float imagMax, int iter, String tName) {
         super();
 
         // Load values which were given as arguments
@@ -34,6 +39,7 @@ public class Mandelbrot extends FractalSuper {
         this.iter = iter;
 
         title = "Mandelbrot";
+        this.threadName = tName;
     }
 
     @Override
@@ -58,7 +64,7 @@ public class Mandelbrot extends FractalSuper {
                     z = Complex.add(Complex.square(z), c);
 
                     if (z.absSquare() > 4) {
-                        grid[x][y] = k;
+                        PointGrid.setPoint(x, y, k);
                         break;
                     }
                 }
@@ -68,25 +74,30 @@ public class Mandelbrot extends FractalSuper {
         }
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-
-        super.paintComponent(g);
-
-        for (int x = 0; x < screenWidth; x++) {
-            for (int y = 0; y < screenHeight; y++) {
-                Point p = new Point(x, y);
-
-                int n = grid[x][y];
-
-                if (n == 0) {
-                    drawPoint((Graphics2D) g, Color.RED, p);
-
-                } else {
-                    drawPoint((Graphics2D) g, colorCalculator(n), p);
-                }
-            }
-        }
+    public PointGrid getGrid() {
+        return grid;
     }
 
+    public void applicableArea(Rectangle a) {
+        //System.out.println(xF + " " + xT + " " + yF + " " + yT);
+
+        xF = (int) a.getMinX();
+        xT = (int) a.getMaxX();
+
+        yF = (int) a.getMinY();
+        yT = (int) a.getMaxY();
+    }
+
+    public void run() {
+        System.out.println(threadName + " running...");
+        calculate(xF, xT, yF, yT);
+        //calculate();
+    }
+
+    public void start() {
+        if (t == null) {
+            t = new Thread(this, threadName);
+            t.start();
+        }
+    }
 }

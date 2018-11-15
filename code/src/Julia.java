@@ -46,7 +46,6 @@ public class Julia extends FractalSuper {
                 Complex z = new Complex(zX, zY);
 
                 for (int k = 0; k < iter; k++) {
-                    //z = z^2 + c
                     z = Complex.add(Complex.square(z), c);
 
                     if (z.absSquare() > 4) {
@@ -56,15 +55,13 @@ public class Julia extends FractalSuper {
                 }
                 //System.out.println("x: (" + x + ") " + zX + " y: (" + y + ") " + zY + " --> ");
                 //System.out.println("x: " + x + " y: " + y + " " + grid[x][y]);
-
             }
         }
     }
 
-    @Override
     public void paintComponent(Graphics g) {
         // call paintComponent from parent class
-        super.paintComponent(g);
+        /*super.paintComponent(g);
 
         for (int x = 0; x < screenWidth; x++) {
             for (int y = 0; y < screenHeight; y++) {
@@ -73,12 +70,12 @@ public class Julia extends FractalSuper {
                 int n = grid[x][y];
 
                 if (n == 0) {
-                    drawPoint((Graphics2D) g, Color.RED, p);
+                    drawPoint((Graphics2D) g, Color.BLACK, p);
                 } else {
                     drawPoint((Graphics2D) g, colorCalculator(n), p);
                 }
             }
-        }
+        }*/
     }
 
 }

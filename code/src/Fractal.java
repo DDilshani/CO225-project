@@ -1,23 +1,28 @@
+import java.awt.*;
+
 class Fractal {
 
     public static void main(String[] args) {
 
-        int maxIter;
-        float realMax, realMin, imagMin, imagMax;
+        long startTime = System.nanoTime();
+        int noOfThreads =1;
+        int maxIter = 1000;
+        float realMax = 1f, realMin = -1f, imagMin = -1f, imagMax = 1f;
+
+        Mandelbrot[] m = new Mandelbrot[noOfThreads];
+        Thread[] tr = new Thread[noOfThreads];
 
         if (args.length > 0 && args[0].equals("Mandelbrot")) {
-            Mandelbrot m;
             int argc = args.length;
 
             if (argc == 1) {                // 0 arguments >> calling default values
-                m = new Mandelbrot();
+                // All default arguments
 
             } else if (argc == 5) {        // 4 arguments >> region of interst in the complex plane
                 realMin = Float.parseFloat(args[1]);
                 realMax = Float.parseFloat(args[2]);
                 imagMin = Float.parseFloat(args[3]);
                 imagMax = Float.parseFloat(args[4]);
-                m = new Mandelbrot(realMin, realMax, imagMin, imagMax);
 
             } else if (argc == 6) {        // 5 arguemnts >> number of iterations to do for a point
                 realMin = Float.parseFloat(args[1]);
@@ -25,19 +30,38 @@ class Fractal {
                 imagMin = Float.parseFloat(args[3]);
                 imagMax = Float.parseFloat(args[4]);
                 maxIter = Integer.parseInt(args[5]);
-                m = new Mandelbrot(realMin, realMax, imagMin, imagMax, maxIter);
 
             } else {
                 System.out.println("Wrong input - Mandelbrot");
                 return;
             }
 
-            // Print Parameters and Draw
-            m.printParameters();
-            m.calculate();
-            m.draw();
+            for (int i = 0; i < noOfThreads; i++) {
 
-        } else if (args.length > 0 && args[0].equals("Julia")) {
+                m[i] = new Mandelbrot(realMin, realMax, imagMin, imagMax, maxIter, "Thread" + i);
+                m[i].applicableArea(new Rectangle((800 / noOfThreads) * i, 0, (800 / noOfThreads), 600));
+
+                tr[i] = new Thread(m[i], "Thread" + i);
+                tr[i].start();
+            }
+
+            try {
+
+                for (int i = 0; i < noOfThreads; i++) {
+                    tr[i].join();
+                }
+
+            } catch (InterruptedException e) {
+                System.out.println("Not good");
+            }
+
+            // Draw the matrix on display
+            Plotter p = new Plotter(m[0].getGrid());
+            p.draw();
+
+
+        } else if (args.length > 0 && args[0].
+                equals("Julia")) {
 
             Julia j = new Julia();
             int argc = args.length;
@@ -58,10 +82,14 @@ class Fractal {
 
             j.printParameters();
             j.calculate();
-            j.draw();
+            //j.draw();
 
         } else {
             System.out.println("wrong input");
         }
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        System.out.println("Execution Time: " + duration + "ms");
     }
 }
