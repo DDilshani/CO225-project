@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.util.Random;
 
 public class MyPanel extends JPanel {
 
@@ -15,6 +16,7 @@ public class MyPanel extends JPanel {
         this.grid = grid;
         setPreferredSize(new Dimension(screenWidth, screenHeight));
     }
+
     MyPanel(PointGrid grid, String title) {
         this(grid);
         this.title = title;
@@ -38,22 +40,23 @@ public class MyPanel extends JPanel {
         return new Color(Color.HSBtoRGB(k / 256f, 1, k / (k + 8f)));
     }
 
+    protected Color colorCalculator(int k, float hue) {
+        return new Color(Color.HSBtoRGB(hue, 1, k / (k + 16f)));
+    }
+
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
+
+        Random r = new Random();
+        float hue = r.nextInt(1000) / 1000f;
 
         for (int x = 0; x < screenWidth; x++) {
             for (int y = 0; y < screenHeight; y++) {
                 Point p = new Point(x, y);
 
                 int n = PointGrid.getPoint(x, y);
-
-                if (n == 0) {
-                    drawPoint((Graphics2D) g, Color.BLACK, p);
-
-                } else {
-                    drawPoint((Graphics2D) g, colorCalculator(n), p);
-                }
+                drawPoint((Graphics2D) g, colorCalculator(n, hue), p);
             }
         }
     }
