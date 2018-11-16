@@ -87,7 +87,7 @@ class Fractal {
         } else if (argc > 0 && args[0].equals("Julia")) {
 
             Julia[] j = new Julia[noOfThreads];
-            float real = 1f, imag = -1f;
+            float real = -0.4f, imag = 0.6f;
 
             // Read and update arguments given from the commandline
             if (argc == 1 || argc == 3 || argc == 4) {
