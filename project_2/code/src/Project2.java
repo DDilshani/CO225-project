@@ -3,7 +3,13 @@ public class Project2 {
 
         //StudentDB allowedUsers = new StudentDB("e12.csv","Student RegNo","Name");
 
-        Server mainServer = new Server(Server.BASE_PORT);
+        String filePath = "C:/java/stocks.csv";
+        //String filePath = "stocks.csv";
+
+        StockDatabase stocks = new StockDatabase(filePath);
+        Server mainServer = new Server(Server.BASE_PORT, stocks);
+
+        
         mainServer.server_loop();
     }
 }
