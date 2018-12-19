@@ -104,16 +104,20 @@ public class StockDatabase {
         Iterator<Integer> iterator = stockMarket.keySet().iterator();//iterate the hash table
         while(iterator.hasNext()){
             Company com = stockMarket.get(iterator.next());
+            System.out.println();
         }
-
     }
 
-    public Boolean isSymbolExists(String symbol) {
-        // Need to code here
-        return true;
+    public Boolean isSymbolExists(String s) {
+        while(iterator.hasNext()){
+            Company com = stockMarket.get(iterator.next());
+            if(com.symbol==s){
+            	return true;
+            }else {
+            	return false;
+            }
+        }
     }
-
-
 
     //public getCompany(){ }
 
