@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
 
 public class StockDatabase {
 
@@ -50,11 +49,12 @@ public class StockDatabase {
         // Need to  code
     }
 
-
     public Boolean isSymbolExists(String symbol) {
         // Need to code here
         return true;
     }
+
+
 
     //public getCompany(){ }
 }
