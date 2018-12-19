@@ -5,8 +5,8 @@ import java.util.*;
 import java.lang.*;
 
 class Company {
-    String symbol, name, bidBy;
-    double price;
+    private String symbol, name, bidBy;
+    private double price;
 
     public Company(String symbol, String name, double price, String bidBy) {
         this.symbol = symbol;
@@ -51,9 +51,9 @@ class Company {
 }
 
 class History {
-    String symbol, bidBy;
-    double price;
-    Date time;
+    private String symbol, bidBy;
+    private double price;
+    private Date time;
 
     public History(String symbol, double price, String bidBy, Date time) {
         this.symbol = symbol;
@@ -69,15 +69,14 @@ class History {
 
 public class StockDatabase {
 
-    LinkedList<History> myHistory;
-    Map<String, Company> stockMarket;
+    private LinkedList<History> myHistory;
+    private Map<String, Company> stockMarket;
 
     public StockDatabase(String filePath) {
         readCSV(filePath);
     }
 
     private void readCSV(String filePath) {
-
         String line = "";
 
         myHistory = new LinkedList<History>();
@@ -108,23 +107,28 @@ public class StockDatabase {
             String value = stockMarket.get(name).toString();
             System.out.println(key + " " + value);
         }
-
     }
 
     public void printHistory() {
         System.out.println(myHistory.toString().replace(",", "\n"));
     }
 
+    public boolean newBidEntry(String symbol, String bidBy, double bidVal) {
+        Company c = stockMarket.get(symbol);
+        c.price = bidVal;
+        c.bidBy = bidBy;
+        stockMarket.replace(symbol, c);
+        return true;
+    }
+
     public Boolean isSymbolExists(String s) {
         return stockMarket.containsKey(s);
     }
 
-    public boolean newHistoryRecord(String symbol, double value,String bidBy) {
-        myHistory.add('symbol',value,'bidBy',new Date());
+    public boolean newHistoryRecord(String symbol, double value, String bidBy) {
+        myHistory.add(new History(symbol, value, bidBy, new Date()));
         return true;
     }
-
-    
 
 
     //public getCompany(){ }
