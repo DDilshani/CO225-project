@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Date;
 import javax.swing.*;
 
 public class Display
@@ -9,6 +10,7 @@ public class Display
 
     //JTextArea textArea;
     Server server;
+    StockDatabase stock = null;
     static JFrame frame;
 
     private int screenWidth = 600;
@@ -20,14 +22,19 @@ public class Display
         FB, VRTU, MSFT, GOOGL, YHOO, XLNX, TSLA, TXN
     }
 
-    private JLabel[] lable = new JLabel[noOfLables];
+    private JLabel[] lblNames = new JLabel[noOfLables];
+    private JLabel[] lblValues = new JLabel[noOfLables];
+
     private final String[] lableName = {"FB", "VRTU", "MSFT", "GOOGL", "YHOO", "XLNX", "TSLA", "TXN"};
 
-    public Display(Server server) {
+    public Display(Server server, StockDatabase stock) {
         super(new GridBagLayout());
 
+        Date d = new Date();
+        this.stock = stock;
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         draw();
+
 
 
         /*JFrame frame = new JFrame("TextDemo");
@@ -62,35 +69,48 @@ public class Display
     public void draw() {
 
         // Draw the window
-        frame = new JFrame("Auction Server");
+        frame = new JFrame("Auction Server 2");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(this);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        //frame.setBackground(new Color(212, 38, 34));
+        //frame.pack();
 
-        // Button
-        //JButton b = new JButton("click");
-        //b.setBounds(10, 10, 100, 40);
-        //frame.add(b);
+        //frame.setLocationRelativeTo(null);
 
         for (int i = 0; i < noOfLables; i++) {
-            lable[i] = new JLabel(lableName[i]);
-            lable[i].setBounds(100, 50 + (25 * i), 400, 20);
-            //lable[i].setBackground(new Color(82, 82, 82));
-            lable[i].setForeground(new Color(68, 168, 22));
-            frame.add(lable[i]);
+            lblNames[i] = new JLabel(lableName[i]);
+            lblNames[i].setBounds(100, 100 + (30 * i), 100, 15);
+            lblNames[i].setBackground(new Color(82, 82, 82));
+            lblNames[i].setForeground(new Color(68, 168, 22));
+            frame.add(lblNames[i]);
+
+            lblValues[i] = new JLabel("0");
+            lblValues[i].setBounds(200, 100 + (30 * i), 100, 15);
+            lblValues[i].setBackground(new Color(82, 82, 82));
+            lblValues[i].setForeground(new Color(68, 168, 22));
+            frame.add(lblValues[i]);
         }
+
+        frame.setSize(screenWidth, screenHeight);
+        frame.setResizable(false);
+        frame.setLayout(null);
+        frame.setVisible(true);
         //frame.add(l2);
     }
 
     public void actionPerformed(ActionEvent e) {
-        String newline = server.getMSG();
-        if (newline != null) {
+        //String newline = server.getMSG();
+
+        for (int i = 0; i < noOfLables; i++) {
+            //System.out.println(stock.stockMarket.get(lableName[i]).getPrice());
+            String price = Double.toString(stock.stockMarket.get(lableName[i]).getPrice());
+            lblValues[i].setText(price);
+        }
+
+        /*if (newline != null) {
             //textArea.append(newline + "\n");
             //textArea.setCaretPosition(textArea.getDocument().getLength());
-        }
+        }*/
+
+
     }
 }

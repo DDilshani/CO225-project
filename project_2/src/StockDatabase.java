@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -79,19 +78,17 @@ public class StockDatabase {
 
     private void readCSV(String filePath) {
 
-        String csvfile = filePath;  //"stocks.csv";
         String line = "";
 
         myHistory = new LinkedList<History>();
         stockMarket = new Hashtable<String, Company>(); //create and map hash table
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvfile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             br.readLine(); //read first line
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 stockMarket.put(data[0], new Company(data[0], data[1], Double.parseDouble(data[2]), new String())); // enter data to the hash table
                 myHistory.add(new History(data[0], Double.parseDouble(data[2]), new String(), new Date()));
-
             }
 
         } catch (IOException e) {
@@ -111,17 +108,15 @@ public class StockDatabase {
             String value = stockMarket.get(name).toString();
             System.out.println(key + " " + value);
         }
+
+    }
+
+    public void printHistory() {
+        System.out.println(myHistory.toString().replace(",", "\n"));
     }
 
     public Boolean isSymbolExists(String s) {
-        while(iterator.hasNext()){
-            Company com = stockMarket.get(iterator.next());
-            if(com.symbol==s){
-            	return true;
-            }else {
-            	return false;
-            }
-        }
+        return stockMarket.containsKey(s);
     }
 
     //public getCompany(){ }
