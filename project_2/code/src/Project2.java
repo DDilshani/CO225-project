@@ -15,6 +15,7 @@ public class Project2 {
 
         Display d = new Display(mainServer);
 
+        stocks.printAllCompanies();
         //d.draw();
         mainServer.server_loop();
 
