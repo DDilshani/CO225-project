@@ -119,6 +119,14 @@ public class StockDatabase {
         return stockMarket.containsKey(s);
     }
 
+    public boolean newHistoryRecord(String symbol, double value,String bidBy) {
+        myHistory.add('symbol',value,'bidBy',new Date());
+        return true;
+    }
+
+    
+
+
     //public getCompany(){ }
 
 }
