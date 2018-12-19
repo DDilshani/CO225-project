@@ -25,6 +25,8 @@ class ConnectionServer implements Runnable {
 
     private static StockDatabase stock = null;
 
+    private Thread t;
+
     public ConnectionServer(Server mainServer, StockDatabase stock) {
         this.mySocket = null;
         this.currentState = WAIT_NAME;
@@ -38,11 +40,12 @@ class ConnectionServer implements Runnable {
 
     public boolean handleConnection(Socket socket) {
         this.mySocket = socket;
-        Thread newThread = new Thread(this);
-        newThread.start();
+        t = new Thread(this);
+        t.start();
         return true;
     }
 
+    @Override
     public void run() {
 
         BufferedReader in = null;
@@ -76,9 +79,10 @@ class ConnectionServer implements Runnable {
                         // If the provided Symbol is found the server should reply back with the
                         // current cost of the security or -1 to indicate that the Symbol is invalid.
 
-                        if (line.trim().compareTo("AAL") == 0) {
-                            int cost = 100;
+                        if (stock.isSymbolExists(line.trim()) == true) {
+
                             clientSymbol = line.trim();
+                            double cost = stock.stockMarket.get(clientSymbol).getPrice();
 
                             reply = "You are now able to bid for " + clientSymbol + "\n";
                             reply += "Current stock cost is " + cost + "\n";
@@ -95,7 +99,18 @@ class ConnectionServer implements Runnable {
                     case ALLOW_BID:
 
                         reply = "You said: " + line + "\n";
-                        mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
+                        // implement the logic
+
+
+
+                        try {
+                            stock.newBidEntry(clientSymbol, clientName, Double.parseDouble(line));
+                            mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
+
+                        } catch (Exception ex) {
+
+                            //mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
+                        }
                         break;
                     default:
                         System.out.println("Undefined state");
@@ -104,6 +119,8 @@ class ConnectionServer implements Runnable {
                 }
                 out.print(reply);
                 out.flush();
+
+                //t.sleep(500);
             }
             out.close();
             in.close();

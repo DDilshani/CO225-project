@@ -13,7 +13,7 @@ public class Project2 {
 
         Display d = new Display(mainServer, stocks);
 
-        stocks.printHistory();
+        //stocks.printHistory();
         //d.draw();
         mainServer.server_loop();
 
