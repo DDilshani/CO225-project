@@ -7,7 +7,7 @@ public class Server {
     private static LinkedList<String> msgs;
     public static final int BASE_PORT = 2000;  // do not change
     private ServerSocket serverSocket = null;  // server Socket for main server
-    private StockDatabase stocks = null;     // who are allowed to chat
+    private static StockDatabase stocks = null;     // who are allowed to chat
 
     public Server(int socket, StockDatabase stocks) {
         try {
@@ -44,7 +44,7 @@ public class Server {
         try {
             while (true) {
                 Socket socket = this.serverSocket.accept();
-                ConnectionServer worker = new ConnectionServer(this);
+                ConnectionServer worker = new ConnectionServer(this, stocks);
                 worker.handleConnection(socket);
             }
         } catch (IOException e) {

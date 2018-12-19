@@ -21,15 +21,19 @@ class ConnectionServer implements Runnable {
     private int currentState;
     private String clientName;
     private String clientSymbol;
-
     private Server mainServer;
 
-    public ConnectionServer(Server mainServer) {
+    private static StockDatabase stock = null;
+
+    public ConnectionServer(Server mainServer, StockDatabase stock) {
         this.mySocket = null;
         this.currentState = WAIT_NAME;
         this.clientName = "User";
         this.clientSymbol = null;
         this.mainServer = mainServer;
+
+
+        this.stock = stock;
     }
 
     public boolean handleConnection(Socket socket) {
@@ -89,7 +93,7 @@ class ConnectionServer implements Runnable {
                         break;
 
                     case ALLOW_BID:
-                        //mainServer.postMSG(this.clientName + " was kicked out");
+
                         reply = "You said: " + line + "\n";
                         mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
                         break;
@@ -105,8 +109,7 @@ class ConnectionServer implements Runnable {
             in.close();
             this.mySocket.close();
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
