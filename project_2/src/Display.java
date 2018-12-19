@@ -75,18 +75,22 @@ public class Display
         //frame.pack();
 
         //frame.setLocationRelativeTo(null);
+        JLabel title = new JLabel("Auction Server");
+        title.setBounds(100, 50, 300, 20);
+        title.setFont(new Font("Verdana", Font.PLAIN, 24));
+        frame.add(title);
 
         for (int i = 0; i < noOfLables; i++) {
             lblNames[i] = new JLabel(lableName[i]);
             lblNames[i].setBounds(100, 100 + (30 * i), 100, 15);
             lblNames[i].setBackground(new Color(82, 82, 82));
-            lblNames[i].setForeground(new Color(68, 168, 22));
+            lblNames[i].setForeground(new Color(0, 0, 180));
             frame.add(lblNames[i]);
 
             lblValues[i] = new JLabel("0");
             lblValues[i].setBounds(200, 100 + (30 * i), 100, 15);
             lblValues[i].setBackground(new Color(82, 82, 82));
-            lblValues[i].setForeground(new Color(68, 168, 22));
+            lblValues[i].setForeground(new Color(0, 0, 180));
             frame.add(lblValues[i]);
         }
 

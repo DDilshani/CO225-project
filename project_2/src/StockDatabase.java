@@ -108,7 +108,6 @@ public class StockDatabase {
             String value = stockMarket.get(name).toString();
             System.out.println(key + " " + value);
         }
-
     }
 
     public void printHistory() {
