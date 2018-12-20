@@ -35,8 +35,12 @@ class Company {
         return name;
     }
 
-    public void setPrice(double p) {
-        price = p;
+    public void setPrice(double price) {
+        this.price=price;
+    }
+
+    public void setBidBy(String bidBy) {
+        this.bidBy=bidBy;
     }
 
     public boolean newBid(String bidder, double p) {
@@ -48,6 +52,7 @@ class Company {
             return true;
         }
     }
+
 }
 
 class History {
