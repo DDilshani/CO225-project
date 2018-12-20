@@ -1,29 +1,32 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.swing.*;
 
-class ConnectionServer implements Runnable {
-    // some constants 
-    public static final int WAIT_NAME = 0;
-    public static final int WAIT_SYMBOL = 1;
-    public static final int ALLOW_BID = 2;
+class ConnectionServer implements Runnable, ActionListener {
 
-    /*
-    public static final String WAIT_AUTH_MSG = "Registration Number pls!\n";
-    public static final String AUTH_DONE_MSG = "You are authorised to post\n";
-    public static final String MSG_POSTED = "Your message posted\n";
-    */
+    private static final int WAIT_NAME = 0;
+    private static final int WAIT_SYMBOL = 1;
+    private static final int ALLOW_BID = 2;
 
     private Socket mySocket;
+
     private int currentState;
+    private double currentBid;
+
     private String clientName;
     private String clientSymbol;
     private Server mainServer;
+    private Company currentCompany = null;
 
     private static StockDatabase stock = null;
+    private BufferedReader in = null;
+    private PrintWriter out = null;
 
     private Thread t;
 
@@ -33,9 +36,25 @@ class ConnectionServer implements Runnable {
         this.clientName = "User";
         this.clientSymbol = null;
         this.mainServer = mainServer;
-
-
         this.stock = stock;
+
+        Timer timer = new Timer(500, this);
+        timer.start();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (currentState == ALLOW_BID) {
+
+            // Show if the value is changed and it was done by other user
+            if (currentBid != currentCompany.getPrice() && clientName.compareTo(currentCompany.getBidBy()) != 0) {
+                currentBid = stock.getPriceOnCompany(clientSymbol);
+
+                // TODO: Need to post this message to the client
+                mainServer.postMSG(">> " + currentBid + " by " + currentCompany.getBidBy());
+            }
+        }
     }
 
     public boolean handleConnection(Socket socket) {
@@ -47,9 +66,6 @@ class ConnectionServer implements Runnable {
 
     @Override
     public void run() {
-
-        BufferedReader in = null;
-        PrintWriter out = null;
         try {
             in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
@@ -62,31 +78,26 @@ class ConnectionServer implements Runnable {
                 switch (currentState) {
                     case WAIT_NAME:
                         if (line.length() != 0) {
-                            // userName = line;
-                            this.clientName = line;
-
-                            reply = "Enter the Symbol you wish to bid:\n";
+                            clientName = line;
                             currentState = WAIT_SYMBOL;
+                            reply = "Enter the Symbol of the company you wish to bid:\n";
+
                         } else {
-                            //mainServer.postMSG("Please enter an non-empty string as your name: ");
                             reply = "Please enter an non-empty string as your name:\n";
                         }
                         break;
 
                     case WAIT_SYMBOL:
+                        clientSymbol = line.trim();
 
-                        // check is there exists a symbol equal to the 'line'
-                        // If the provided Symbol is found the server should reply back with the
-                        // current cost of the security or -1 to indicate that the Symbol is invalid.
-
-                        if (stock.isSymbolExists(line.trim()) == true) {
-
-                            clientSymbol = line.trim();
-                            double cost = stock.stockMarket.get(clientSymbol).getPrice();
+                        if (stock.isSymbolExists(clientSymbol)) {
+                            currentCompany = stock.getCompany(clientSymbol);
+                            double price = currentCompany.getPrice();
 
                             reply = "You are now able to bid for " + clientSymbol + "\n";
-                            reply += "Current stock cost is " + cost + "\n";
+                            reply += "Current stock price is " + price + "\n";
 
+                            currentBid = price;
                             currentState = ALLOW_BID;
 
                         } else {
@@ -97,24 +108,30 @@ class ConnectionServer implements Runnable {
                         break;
 
                     case ALLOW_BID:
-
-                        reply = "You said: " + line + "\n";
-                        // implement the logic
-
-
-
                         try {
-                            stock.newBidEntry(clientSymbol, clientName, Double.parseDouble(line));
-                            mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
+                            double bidValue = Double.parseDouble(line);
+
+                            if (bidValue > currentCompany.getPrice()) {
+
+                                stock.newBidEntry(clientSymbol, clientName, bidValue);
+                                stock.newHistoryRecord(clientSymbol, bidValue, clientName);
+
+                                mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
+                                reply = "Your bid, " + bidValue + " is accepted for " + currentCompany.getName() + "\n";
+
+                            } else {
+                                reply = "Your bid is less than current heighest bid, " + currentCompany.getPrice() + " for " + currentCompany.getName();
+                                reply += ". Please try with a higher amount.\n";
+                            }
 
                         } catch (Exception ex) {
-
-                            //mainServer.postMSG(this.clientName + " > " + clientSymbol + " > " + line);
+                            reply = "Please enter a valid amount as the bid\n";
                         }
                         break;
+
                     default:
                         System.out.println("Undefined state");
-                        reply = "Undefined state";
+                        reply = "Undefined state\n";
                         return;
                 }
                 out.print(reply);

@@ -5,6 +5,8 @@ import java.util.*;
 import java.lang.*;
 
 class Company {
+    // The object for store company details
+
     private String symbol, name, bidBy;
     private double price;
 
@@ -32,15 +34,15 @@ class Company {
     }
 
     public String getBidBy() {
-        return name;
+        return bidBy;
     }
 
     public void setPrice(double price) {
-        this.price=price;
+        this.price = price;
     }
 
     public void setBidBy(String bidBy) {
-        this.bidBy=bidBy;
+        this.bidBy = bidBy;
     }
 
     public boolean newBid(String bidder, double p) {
@@ -56,6 +58,8 @@ class Company {
 }
 
 class History {
+    // An object for store transaction details
+
     private String symbol, bidBy;
     private double price;
     private Date time;
@@ -74,7 +78,7 @@ class History {
 
 public class StockDatabase {
 
-    private LinkedList<History> myHistory;
+    private LinkedList<History> history;
     private Map<String, Company> stockMarket;
 
     public StockDatabase(String filePath) {
@@ -84,15 +88,17 @@ public class StockDatabase {
     private void readCSV(String filePath) {
         String line = "";
 
-        myHistory = new LinkedList<History>();
-        stockMarket = new Hashtable<String, Company>(); //create and map hash table
+        history = new LinkedList<History>();
+        stockMarket = new Hashtable<String, Company>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             br.readLine(); //read first line
             while ((line = br.readLine()) != null) {
+
+                // append data into each list
                 String[] data = line.split(",");
-                stockMarket.put(data[0], new Company(data[0], data[1], Double.parseDouble(data[2]), new String())); // enter data to the hash table
-                myHistory.add(new History(data[0], Double.parseDouble(data[2]), new String(), new Date()));
+                stockMarket.put(data[0], new Company(data[0], data[1], Double.parseDouble(data[2]), ""));
+                history.add(new History(data[0], Double.parseDouble(data[2]), "", new Date()));
             }
 
         } catch (IOException e) {
@@ -105,6 +111,8 @@ public class StockDatabase {
         }
     }
 
+    // Functions for debugging ----------------------------------------------------------------------------------
+
     public void printAllCompanies() {
 
         for (String name : stockMarket.keySet()) {
@@ -115,27 +123,37 @@ public class StockDatabase {
     }
 
     public void printHistory() {
-        System.out.println(myHistory.toString().replace(",", "\n"));
+        System.out.println(history.toString().replace(",", "\n"));
     }
+
+    // Utility Functions ----------------------------------------------------------------------------------------
 
     public boolean newBidEntry(String symbol, String bidBy, double bidVal) {
         Company c = stockMarket.get(symbol);
-        c.price = bidVal;
-        c.bidBy = bidBy;
+        c.setPrice(bidVal);
+        c.setBidBy(bidBy);
+
+        //System.out.println("     " + bidBy);
         stockMarket.replace(symbol, c);
         return true;
     }
 
-    public Boolean isSymbolExists(String s) {
+    public boolean isSymbolExists(String s) {
         return stockMarket.containsKey(s);
     }
 
     public boolean newHistoryRecord(String symbol, double value, String bidBy) {
-        myHistory.add(new History(symbol, value, bidBy, new Date()));
+        history.add(new History(symbol, value, bidBy, new Date()));
+        System.out.println("history: " + bidBy + ", " + value + ", " + symbol);
         return true;
     }
 
+    public Company getCompany(String symbol) {
+        return stockMarket.get(symbol);
+    }
 
-    //public getCompany(){ }
+    public double getPriceOnCompany(String symbol) {
+        return getCompany(symbol).getPrice();
+    }
 
 }
