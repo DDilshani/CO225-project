@@ -10,6 +10,7 @@ public class Display
         extends JPanel implements ActionListener {
 
     //JTextArea textArea;
+    //encapsulating instance variables cannot access outsude the class
     private Server server;
     private static StockDatabase stock = null;
     private static JFrame frame;
