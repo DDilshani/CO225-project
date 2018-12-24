@@ -1,3 +1,5 @@
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -75,7 +77,7 @@ class History {
         return symbol + " " + " " + price + " " + bidBy + " " + time;
     }
 
-    public String getSymbol(){
+    public String getSymbol() {
         return symbol;
     }
 }
@@ -102,7 +104,7 @@ public class StockDatabase {
                 // append data into each list
                 String[] data = line.split(",");
                 stockMarket.put(data[0], new Company(data[0], data[1], Double.parseDouble(data[2]), ""));
-                history.add(new History(data[0], Double.parseDouble(data[2]), "", new Date()));
+                history.add(new History(data[0], Double.parseDouble(data[2]), "<starting-price>", new Date()));
             }
 
         } catch (IOException e) {
@@ -161,13 +163,25 @@ public class StockDatabase {
     }
 
 
-
-    //----------------------------------------// 
-    public static void printSymbolHistory(String s){
-        for(int num=0; num<history.size(); num++){
-            if(history.get(num).getSymbol().equals(s)){
+    //----------------------------------------//
+    public static void printSymbolHistory(String s) {
+        for (int num = 0; num < history.size(); num++) {
+            if (history.get(num).getSymbol().equals(s)) {
                 System.out.println(history.get(num));
             }
         }
+    }
+
+    public ArrayList<String> getSymbolHistory(String s) {
+        ArrayList<String> ls = new ArrayList<String>();
+        // TODO: This shoule implement more
+        for (int num = 0; num < history.size(); num++) {
+            if (history.get(num).getSymbol().equals(s)) {
+                //System.out.println(history.get(num));
+                ls.add(history.get(num).toString());
+            }
+        }
+        return ls;
+
     }
 }
