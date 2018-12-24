@@ -4,7 +4,8 @@ public class Project2 {
 
     public static void main(String[] args) throws IOException {
 
-        String filePath = "stocks.csv";
+        String filePath = "C:/java/stocks.csv";
+        //String filePath = "stocks.csv";
 
         StockDatabase stocks = new StockDatabase(filePath);
         Server mainServer = new Server(Server.BASE_PORT, stocks);
