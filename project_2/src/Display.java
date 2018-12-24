@@ -3,6 +3,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import java.util.Scanner;
 
 public class Display
         extends JPanel implements ActionListener {
@@ -12,10 +13,13 @@ public class Display
     private static StockDatabase stock = null;
     private static JFrame frame;
 
-    private final int screenWidth = 400;
-    private final int screenHeight = 400;
+    private final int screenWidth = 600;
+    private final int screenHeight = 600;
     private final int noOfLables = 8;
 
+
+    JTextArea text;
+    //VisualServer vServer;
     /*public enum compName {
         FB, VRTU, MSFT, GOOGL, YHOO, XLNX, TSLA, TXN
     }*/
@@ -35,7 +39,10 @@ public class Display
         timer.start();
 
         this.server = server;
-    }
+
+   }
+
+
 
     public void draw() {
 
@@ -49,6 +56,32 @@ public class Display
         title.setBounds(50, 30, 300, 20);
         title.setFont(new Font("Verdana", Font.PLAIN, 24));
         frame.add(title);
+
+        JTextField txtstockSelect = new JTextField("");
+        txtstockSelect.setBounds(50, 325, 75, 20);
+        txtstockSelect.setFont(new Font("Verdana", Font.PLAIN, 24));
+        frame.add(txtstockSelect);
+
+        
+        JButton enterButton = new JButton("Enter");
+        enterButton.setBounds(150, 325, 100, 20);
+        enterButton.setFont(new Font("Verdana", Font.PLAIN, 10));
+        frame.add(enterButton);
+
+        /*------------------------
+        
+        declaring display area- textarea???
+
+
+        -----------------------------*/
+       enterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                //call the method printSymbolHistory(String s);
+            }
+        });
+
+
 
         for (int i = 0; i < noOfLables; i++) {
             // Draw lables

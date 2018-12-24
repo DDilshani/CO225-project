@@ -74,12 +74,16 @@ class History {
     public String toString() {
         return symbol + " " + " " + price + " " + bidBy + " " + time;
     }
+
+    public String getSymbol(){
+        return symbol;
+    }
 }
 
 public class StockDatabase {
 
-    private LinkedList<History> history;
-    private Map<String, Company> stockMarket;
+    private static LinkedList<History> history;
+    private static Map<String, Company> stockMarket;
 
     public StockDatabase(String filePath) {
         readCSV(filePath);
@@ -156,4 +160,14 @@ public class StockDatabase {
         return getCompany(symbol).getPrice();
     }
 
+
+
+    //----------------------------------------// 
+    public static void printSymbolHistory(String s){
+        for(int num=0; num<history.size(); num++){
+            if(history.get(num).getSymbol().equals(s)){
+                System.out.println(history.get(num));
+            }
+        }
+    }
 }
